@@ -1,0 +1,47 @@
+package com.epam.amorozov.module.ten.soap.services.implementations;
+
+import com.epam.amorozov.module.ten.soap.models.PaymentEntity;
+import com.epam.amorozov.module.ten.soap.repositories.PaymentRepository;
+import com.epam.amorozov.module.ten.soap.services.PaymentService;
+import com.epam.amorozov.module.ten.soap.soaps.payments.Payment;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import java.util.function.Function;
+
+@Service
+@Slf4j
+public class PaymentServiceImpl implements PaymentService {
+    private final PaymentRepository paymentRepository;
+
+    @Autowired
+    public PaymentServiceImpl(PaymentRepository paymentRepository) {
+        this.paymentRepository = paymentRepository;
+    }
+
+    public static final Function<PaymentEntity, Payment> functionEntityToSoap = paymentEntity -> {
+        Payment payment = new Payment();
+        payment.setId(paymentEntity.getId());
+        payment.setPaymentId(paymentEntity.getPaymentId());
+        payment.setPaymentAmount(paymentEntity.getPaymentAmount());
+        try {
+            payment.setDateOfPayment(DatatypeFactory.newInstance().newXMLGregorianCalendar(paymentEntity.getDateOfPayment()));
+        } catch (DatatypeConfigurationException e) {
+            log.debug(e.getMessage());
+        }
+        return payment;
+    };
+
+    @Override
+    public Payment saveNewPayment(PaymentEntity paymentEntity) {
+        return paymentRepository.savePayment(paymentEntity).map(functionEntityToSoap).orElseThrow();
+    }
+
+    @Override
+    public Payment getPaymentByPaymentId(Long paymentId) {
+        return paymentRepository.getPaymentByPaymentId(paymentId).map(functionEntityToSoap).get();
+    }
+}

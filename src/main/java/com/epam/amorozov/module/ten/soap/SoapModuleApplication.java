@@ -1,4 +1,4 @@
-package com.epam.amorozv.module.ten.soap;
+package com.epam.amorozov.module.ten.soap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class SoapModuleApplication {
     public static void main(String[] args) {
         SpringApplication.run(SoapModuleApplication.class, args);
     }
-
 }

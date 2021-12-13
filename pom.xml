@@ -92,12 +92,8 @@
                 </executions>
                 <configuration>
                     <sources>
-                        <source>${project.basedir}/src/main/resources/groups.xsd</source>
-                        <source>${project.basedir}/src/main/resources/students.xsd</source>
+                        <source>${project.basedir}/src/main/resources/xsd/payment.xsd</source>
                     </sources>
-                    <!--					<packageName>soap</packageName>-->
-                    <!--					<outputDirectory>${project.basedir}/src/main/java/com/flamexander/spring/ws/soap</outputDirectory>-->
-                    <!--					<clearOutputDir>false</clearOutputDir>-->
                 </configuration>
             </plugin>
         </plugins>
