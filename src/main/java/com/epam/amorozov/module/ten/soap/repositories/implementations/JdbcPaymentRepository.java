@@ -69,7 +69,6 @@ public class JdbcPaymentRepository implements PaymentRepository {
                 PreparedStatement preparedStatement = connection.prepareStatement(savePaymentSql, new String[]{"ID"});
                 preparedStatement.setLong(1, paymentEntity.getPaymentId());
                 preparedStatement.setBigDecimal(2, paymentEntity.getPaymentAmount());
-                preparedStatement.setDate(3, Date.valueOf(LocalDate.now()));
                 return preparedStatement;
             }, keyHolder);
 

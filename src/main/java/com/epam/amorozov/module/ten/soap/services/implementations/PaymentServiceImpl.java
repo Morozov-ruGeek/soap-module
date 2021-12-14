@@ -38,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment saveNewPayment(PaymentEntity paymentEntity) {
         return paymentRepository.savePayment(paymentEntity)
-                .map(functionEntityToSoap).orElseThrow();
+                .map(functionEntityToSoap).get();
     }
 
     @Override
