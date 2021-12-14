@@ -63,10 +63,10 @@ public class JdbcPaymentRepository implements PaymentRepository {
     @Override
     public Optional<PaymentEntity> savePayment(PaymentEntity paymentEntity) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        final String savePayment = resourceReader.readFileToString(SAVE_PAYMENT_IN_DB_SQL_QUERY_PATH);
+        final String savePaymentSql = resourceReader.readFileToString(SAVE_PAYMENT_IN_DB_SQL_QUERY_PATH);
         try {
             jdbcTemplate.update(connection -> {
-                PreparedStatement preparedStatement = connection.prepareStatement(savePayment, new String[]{"ID"});
+                PreparedStatement preparedStatement = connection.prepareStatement(savePaymentSql, new String[]{"ID"});
                 preparedStatement.setLong(1, paymentEntity.getPaymentId());
                 preparedStatement.setBigDecimal(2, paymentEntity.getPaymentAmount());
                 preparedStatement.setDate(3, Date.valueOf(LocalDate.now()));
@@ -83,10 +83,10 @@ public class JdbcPaymentRepository implements PaymentRepository {
 
     @Override
     public Optional<PaymentEntity> findById(Long id) {
-        final String findByIdSQL = resourceReader.readFileToString(GET_PAYMENT_BY_ID_SQL_QUERY_PATH);
+        final String findByIdSql = resourceReader.readFileToString(GET_PAYMENT_BY_ID_SQL_QUERY_PATH);
         PaymentEntity paymentEntity = null;
         try {
-            paymentEntity = jdbcTemplate.queryForObject(findByIdSQL, paymentRowMapper, id);
+            paymentEntity = jdbcTemplate.queryForObject(findByIdSql, paymentRowMapper, id);
             log.debug("PaymentEntity with id = {} found", id);
         } catch (EmptyResultDataAccessException e) {
             log.debug("PaymentEntity with id = {} not found", id);
