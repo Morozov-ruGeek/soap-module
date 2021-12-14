@@ -3,10 +3,7 @@ package com.epam.amorozov.module.ten.soap.endpoints;
 import com.epam.amorozov.module.ten.soap.models.PaymentEntity;
 import com.epam.amorozov.module.ten.soap.services.PaymentService;
 
-import com.epam.amorozov.module.ten.soap.soaps.payments.GetPaymentByPaymentIdRequest;
-import com.epam.amorozov.module.ten.soap.soaps.payments.GetPaymentByPaymentIdResponse;
-import com.epam.amorozov.module.ten.soap.soaps.payments.SetPaymentRequest;
-import com.epam.amorozov.module.ten.soap.soaps.payments.SetPaymentResponse;
+import com.epam.amorozov.module.ten.soap.soaps.payments.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -30,9 +27,10 @@ public class PaymentEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = LOCAL_PART_SET_PAYMENT_REQUEST)
     @ResponsePayload
     public SetPaymentResponse setNewPayment(@RequestPayload SetPaymentRequest request) {
-        PaymentEntity payment = new PaymentEntity(request.getPaymentId(), request.getPaymentAmount());
+        PaymentEntity paymentEntity= new PaymentEntity(request.getPaymentId(), request.getPaymentAmount());
         SetPaymentResponse response = new SetPaymentResponse();
-        response.setPayment(paymentService.saveNewPayment(payment));
+        Payment payment = paymentService.saveNewPayment(paymentEntity);
+        response.setPayment(payment);
         return response;
     }
 

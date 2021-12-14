@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
+import java.time.LocalDate;
 import java.util.function.Function;
 
 @Service
@@ -24,11 +25,10 @@ public class PaymentServiceImpl implements PaymentService {
 
     public static final Function<PaymentEntity, Payment> functionEntityToSoap = paymentEntity -> {
         Payment payment = new Payment();
-        payment.setId(paymentEntity.getId());
         payment.setPaymentId(paymentEntity.getPaymentId());
         payment.setPaymentAmount(paymentEntity.getPaymentAmount());
         try {
-            payment.setDateOfPayment(DatatypeFactory.newInstance().newXMLGregorianCalendar(paymentEntity.getDateOfPayment()));
+            payment.setDateOfPayment(DatatypeFactory.newInstance().newXMLGregorianCalendar(String.valueOf(LocalDate.now())));
         } catch (DatatypeConfigurationException e) {
             log.debug(e.getMessage());
         }
@@ -37,7 +37,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment saveNewPayment(PaymentEntity paymentEntity) {
-        return paymentRepository.savePayment(paymentEntity).map(functionEntityToSoap).orElseThrow();
+        return paymentRepository.savePayment(paymentEntity)
+                .map(functionEntityToSoap).orElseThrow();
     }
 
     @Override
