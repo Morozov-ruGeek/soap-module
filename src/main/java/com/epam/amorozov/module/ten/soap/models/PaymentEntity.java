@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +19,7 @@ public class PaymentEntity {
     public PaymentEntity(Long paymentId, BigDecimal paymentAmount) {
         this.paymentId = paymentId;
         this.paymentAmount = paymentAmount;
+        this.dateOfPayment = String.valueOf(LocalDate.now());
     }
 
     @Override

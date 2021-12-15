@@ -8,9 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import java.time.LocalDate;
 import java.util.function.Function;
 
 @Service
@@ -27,11 +24,7 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = new Payment();
         payment.setPaymentId(paymentEntity.getPaymentId());
         payment.setPaymentAmount(paymentEntity.getPaymentAmount());
-        try {
-            payment.setDateOfPayment(DatatypeFactory.newInstance().newXMLGregorianCalendar(String.valueOf(LocalDate.now())));
-        } catch (DatatypeConfigurationException e) {
-            log.debug(e.getMessage());
-        }
+        payment.setDateOfPayment(paymentEntity.getDateOfPayment());
         return payment;
     };
 

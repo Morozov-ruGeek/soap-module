@@ -43,7 +43,7 @@
             <xs:element name="id" type="xs:long"/>
             <xs:element name="payment_id" type="xs:long"/>
             <xs:element name="paymentAmount" type="xs:decimal"/>
-            <xs:element name="date_of_payment" type="xs:date"/>
+            <xs:element name="date_of_payment" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
