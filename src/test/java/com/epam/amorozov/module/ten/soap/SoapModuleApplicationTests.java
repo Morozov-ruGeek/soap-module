@@ -1,4 +1,4 @@
-package com.epam.amorozv.module.ten.soap;
+package com.epam.amorozov.module.ten.soap;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
